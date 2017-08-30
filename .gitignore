@@ -1,0 +1,8 @@
+node_modules/
+.bundle/
+/public/main.js
+/public/main.css
+/public/main.js.map
+/public/admin.js
+/public/admin.css
+/public/admin.js.map

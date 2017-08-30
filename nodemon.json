@@ -1,0 +1,11 @@
+{
+	"watch": [
+		"src",
+		"config",
+		"views"
+	],
+	"ignore": [
+		"webpack.config.js"
+	],
+	"ext": "js ejs yml"
+}

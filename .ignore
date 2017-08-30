@@ -1,0 +1,14 @@
+.git/
+node_modules/
+.bundle/
+*.gz
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ttf
+*.otf
+*.eot
+*.woff
+*.woff2
