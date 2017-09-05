@@ -15,6 +15,7 @@ exports.precompileTemplates = async function precompileTemplates() {
 	for (let filePath of filePaths) {
 		let content = await fs.readFile(filePath, 'utf8')
 		cache[filePath] = ejs.compile(content, {
+			compileDebug: ENV === 'development',
 			rmWhitespace: ENV === 'production',
 		})
 	}
