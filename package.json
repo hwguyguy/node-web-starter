@@ -6,9 +6,9 @@
   "author": "Jack Wan <hwguyguy@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "build": "node_modules/webpack/bin/webpack.js --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached",
-    "build:prod": "NODE_ENV=production node_modules/webpack/bin/webpack.js --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
-    "watch": "node_modules/webpack/bin/webpack.js --config config/webpack.config.js --progress --profile --colors --watch --display-error-details --display-cached"
+    "build": "webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached",
+    "build:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
+    "watch": "webpack --config config/webpack.config.js --progress --profile --colors --watch --display-error-details --display-cached"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
