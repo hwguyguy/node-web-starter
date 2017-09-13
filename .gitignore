@@ -1,5 +1,6 @@
 node_modules/
 .bundle/
+/config/database.yml
 /public/main.js
 /public/main.css
 /public/main.js.map
