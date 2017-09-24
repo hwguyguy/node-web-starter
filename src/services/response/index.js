@@ -41,7 +41,14 @@ exports.handleError = async function handleError(action, ctx) {
 		return
 	}
 
-	await error.handleAction(action, ctx)
+	let finalAction = await error.handleAction(action, ctx)
+
+	if (finalAction) {
+		if (finalAction.type === 'error') {
+			throw new Error('Action type "error" is not allowed in error action.')
+		}
+		await handleAction(finalAction, ctx)
+	}
 }
 
 exports.prepare = async function() {
