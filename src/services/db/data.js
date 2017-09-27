@@ -28,7 +28,7 @@ exports.permit = function permit(data, requiredProps = [], optionalProps = [], e
 	requiredProps.forEach(prop => {
 		if (typeof prop === 'string') {
 			convertedData[prop] = data[prop]
-		} else if (typeof Array.isArray(prop)
+		} else if (Array.isArray(prop)
 			&& typeof prop[0] === 'string'
 			&& typeof prop[1] === 'function'
 		) {
@@ -41,7 +41,7 @@ exports.permit = function permit(data, requiredProps = [], optionalProps = [], e
 			&& prop in data
 		) {
 			convertedData[prop] = data[prop]
-		} else if (typeof Array.isArray(prop)
+		} else if (Array.isArray(prop)
 			&& typeof prop[0] === 'string'
 			&& prop[0] in data
 			&& typeof prop[1] === 'function'
