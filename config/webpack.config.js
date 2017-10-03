@@ -75,6 +75,17 @@ module.exports = {
 							minimize: ENV === 'production',
 						}
 					}, {
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true,
+							plugins: () => [
+								require('autoprefixer')({
+									browsers: ['> 1%', 'not ie <= 8'],
+									remove: false,
+								}),
+							]
+						}
+					}, {
 						loader: 'stylus-loader'
 					}],
 				})
@@ -88,6 +99,17 @@ module.exports = {
 						loader: 'css-loader',
 						options: {
 							minimize: ENV === 'production',
+						}
+					}, {
+						loader: 'postcss-loader',
+						options: {
+							sourceMap: true,
+							plugins: () => [
+								require('autoprefixer')({
+									browsers: ['> 1%', 'not ie <= 8'],
+									remove: false,
+								}),
+							]
 						}
 					}, {
 						loader: 'stylus-loader'
