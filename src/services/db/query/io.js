@@ -32,6 +32,8 @@ function getQuery(sql, params, connection) {
 	})
 }
 
+exports.raw = getQuery
+
 exports.read = async function read(...args) {
 	let results = await getQuery(...args)
 	return results.map(camelize)
@@ -55,8 +57,4 @@ exports.write = async function write(...args) {
 		})
 	}
 	return result
-}
-
-exports.raw = function raw(...args) {
-	return getQuery(...args)
 }
