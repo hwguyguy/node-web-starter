@@ -1,8 +1,8 @@
 const Promise = require('bluebird')
 const {pool} = require('./mysql')
-const {camelize} = require('./data')
-const {actions: {error: createError}} = require('../response')
-const errorTypes = require('../response/error/error-types')
+const {camelize} = require('./parameter')
+const {actions: {error: createError}} = require('../../response')
+const errorTypes = require('../../response/error/error-types')
 
 function getQuery(sql, params, connection) {
 	if (typeof params === 'undefined') {
