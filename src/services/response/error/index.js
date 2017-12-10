@@ -19,74 +19,77 @@ exports.createAction = function(...args) {
 }
 
 exports.handleAction = function(action, ctx) {
+	let body = ''
+	let status = 500
+
 	switch (action.errorType) {
 	case errorTypes.APP:
-		ctx.body = {
+		body = {
 			message: action.detail.message
 		}
-		ctx.status = action.detail.status || 400
+		status = action.detail.status || 400
 		break
 
 	case errorTypes.DB_READ_ONE:
-		ctx.body = {
+		body = {
 			message: action.detail.message
 		}
-		ctx.status = 404
+		status = 404
 		break
 
 	case errorTypes.DB_WRITE:
-		ctx.body = {
+		body = {
 			message: action.detail.message
 		}
-		ctx.status = 422
+		status = 422
 		break
 
 	case errorTypes.DB_MYSQL:
 		switch (action.detail.error.code) {
 		case 'ECONNREFUSED':
-			ctx.body = {
+			body = {
 				message: 'Could not connect to database server.'
 			}
-			ctx.status = 503
+			status = 503
 			break
 
 		case 'PROTOCOL_CONNECTION_LOST':
-			ctx.body = {
+			body = {
 				message: 'Connection lost'
 			}
-			ctx.status = 503
+			status = 503
 			break
 
 		case 'ER_ACCESS_DENIED_ERROR':
-			ctx.body = {
+			body = {
 				message: 'Could not access database.'
 			}
-			ctx.status = 503
+			status = 503
 			break
 
 		case 'ER_BAD_DB_ERROR':
-			ctx.body = {
+			body = {
 				message: 'Unknown database.'
 			}
-			ctx.status = 503
+			status = 503
 			break
 
 		case 'ER_DUP_KEY':
-			ctx.body = {
+			body = {
 				message: 'Duplicate key.'
 			}
-			ctx.status = 422
+			status = 422
 			break
 
 		case 'ER_BAD_FIELD_ERROR':
-			ctx.body = {
+			body = {
 				message: 'Unknown column.',
 			}
-			ctx.status = 500
+			status = 500
 			break
 
 		default:
-			ctx.status = 500
+			status = 500
 			break
 		}
 
@@ -95,8 +98,11 @@ exports.handleAction = function(action, ctx) {
 		break
 
 	default:
-		ctx.status = 500
+		status = 500
 		console.error(action)
 		break
 	}
+
+	ctx.body = body
+	ctx.status = status
 }
