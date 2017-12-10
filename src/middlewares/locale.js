@@ -26,7 +26,7 @@ module.exports = function({
 			locale = ctx.request.acceptsLanguages(getAvailableLocales())
 		}
 
-		ctx.state.locale = locale
+		ctx.locale = locale
 
 		return await next()
 	}

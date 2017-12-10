@@ -4,6 +4,8 @@ const readdir = require('recursive-readdir')
 const ejs = require('ejs')
 const {root} = require('../../../helpers/path')
 const {env} = require('../../../helpers/env')
+const {translate, withLocale} = require('../../../../locales')
+const {url} = require('../../../helpers/url')
 
 const ENV = env()
 const viewRoot = root.bind(null, 'views')
@@ -55,9 +57,12 @@ const defaultData = {
 	include,
 }
 
-exports.render = function render(file, data = {}) {
+exports.render = function render(file, ctx, data = {}) {
 	data = {
 		...defaultData,
+		t: withLocale(ctx.locale, translate),
+		url: withLocale(ctx.locale, url),
+		ctx,
 		_template: file, // entry template
 		_current: file, // current template
 		...data,
