@@ -1,6 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const ENV = process.env.NODE_ENV || 'development'
 const ROOT_PATH = path.resolve(__dirname, '..')
@@ -86,7 +86,10 @@ module.exports = {
 							]
 						}
 					}, {
-						loader: 'stylus-loader'
+						loader: 'stylus-loader',
+						options: {
+							sourceMap: true,
+						}
 					}],
 				})
 			},
@@ -112,7 +115,10 @@ module.exports = {
 							]
 						}
 					}, {
-						loader: 'stylus-loader'
+						loader: 'stylus-loader',
+						options: {
+							sourceMap: true,
+						}
 					}],
 				})
 			},
@@ -127,7 +133,7 @@ module.exports = {
 
 			new webpack.SourceMapDevToolPlugin({
 				filename: '[file].map',
-				exclude: ['main.css', 'admin.css'],
+				//exclude: ['main.css', 'admin.css'],
 			}),
 		]: []),
 
