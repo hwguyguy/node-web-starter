@@ -1,8 +1,8 @@
 const mysql = require('mysql')
 const Promise = require('bluebird')
 const yaml = require('yamljs')
-const {root} = require('../../helpers/path')
-const {env} = require('../../helpers/env')
+const {root} = require('../../../helpers/path')
+const {env} = require('../../../helpers/env')
 
 Promise.promisifyAll(mysql)
 Promise.promisifyAll(require('mysql/lib/Connection').prototype)
