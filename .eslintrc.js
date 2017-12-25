@@ -18,12 +18,21 @@ module.exports = {
 		],
 		'quotes': [
 			'error',
-			'single'
+			'single',
+			{
+				avoidEscape: true
+			}
 		],
 		'semi': [
 			'error',
 			'never'
 		],
-		'no-console': 'off'
+		'no-console': 'off',
+		'no-empty': [
+			'error',
+			{
+				allowEmptyCatch: true
+			}
+		],
 	}
 }

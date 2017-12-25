@@ -1,13 +1,19 @@
 const {request, get, post} = require('../common/ajax')
 
-const URL_PREFIX = 'http://localhost:3000'
+const urlPrefix = 'http://localhost:3000'
+
+const urlPattern = /^(http|https):\/\//
 
 function getFullUrl(path) {
+	if (urlPattern.test(path)) {
+		return path
+	}
+
 	if (path.charAt(0) !== '/') {
 		path = '/' + path
 	}
 
-	return URL_PREFIX + path
+	return urlPrefix + path
 }
 
 exports.request = function(url, ...args) {
