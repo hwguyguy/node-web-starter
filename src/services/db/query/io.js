@@ -1,8 +1,7 @@
 const Promise = require('bluebird')
 const {pool} = require('./mysql')
 const {camelize} = require('./parameter')
-const {actions: {error: createError}} = require('../../response')
-const errorTypes = require('../../response/error/error-types')
+const {MysqlError, DbReadOneError, DbWriteError} = require('../../error/db')
 
 function getQuery(sql, params, connection) {
 	if (typeof params === 'undefined') {
@@ -18,16 +17,13 @@ function getQuery(sql, params, connection) {
 	}
 
 	return new Promise((resolve, reject) => {
-		let query = connection.query(sql, params, (error, results, fields) => {
+		const query = connection.query(sql, params, (error, results, fields) => {
 			if (error) {
-				reject(createError(errorTypes.DB_MYSQL, {
-					error,
-					query,
-				}))
+				reject(new MysqlError(error, query))
 				return
 			}
 
-			resolve(results)
+			resolve([results, fields])
 		})
 	})
 }
@@ -35,26 +31,22 @@ function getQuery(sql, params, connection) {
 exports.raw = getQuery
 
 exports.read = async function read(...args) {
-	let results = await getQuery(...args)
+	const [results] = await getQuery(...args)
 	return results.map(camelize)
 }
 
 exports.readOne = async function readOne(...args) {
-	let results = await getQuery(...args)
+	const [results] = await getQuery(...args)
 	if (!results.length) {
-		throw createError(errorTypes.DB_READ_ONE, {
-			message: 'Record not found',
-		})
+		throw new DbReadOneError('Record not found')
 	}
 	return camelize(results[0])
 }
 
 exports.write = async function write(...args) {
-	let result = await getQuery(...args)
+	const [result] = await getQuery(...args)
 	if (!result.affectedRows) {
-		throw createError(errorTypes.DB_WRITE, {
-			message: 'Nothing affected',
-		})
+		throw new DbWriteError('Nothing affected')
 	}
 	return result
 }

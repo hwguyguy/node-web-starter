@@ -9,15 +9,15 @@ const translations = {
 
 const defaultLocale = 'en'
 
-function getAvailableLocales() {
+exports.getAvailableLocales = function getAvailableLocales() {
 	return Object.keys(translations)
 }
 
-function isLocaleAvailable(locale) {
+exports.isLocaleAvailable = function isLocaleAvailable(locale) {
 	return !!translations[locale]
 }
 
-function translate(keys, locale) {
+exports.translate = function translate(keys, locale) {
 	let translation = translations[locale]
 
 	if (!translation) {
@@ -39,15 +39,8 @@ function translate(keys, locale) {
 	return translation
 }
 
-function withLocale(locale, translate) {
+exports.withLocale = function withLocale(locale, translate) {
 	return function (keys) {
 		return translate(keys, locale)
 	}
-}
-
-module.exports = {
-	getAvailableLocales,
-	isLocaleAvailable,
-	translate,
-	withLocale,
 }

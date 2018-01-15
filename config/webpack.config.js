@@ -28,7 +28,7 @@ module.exports = {
 	output: {
 		path: root('public'),
 		filename: '[name].js',
-		sourceMapFilename: '[name].js.map',
+		sourceMapFilename: '[file].map',
 		chunkFilename: '[id].chunk.js',
 	},
 

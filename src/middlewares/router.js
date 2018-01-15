@@ -1,7 +1,7 @@
 const Router = require('koa-router')
-const {handle: handleResponse, layout} = require('./response')
+const {handleError} = require('./error')
+const {renderView, layout} = require('./view')
 const handlers = require('../handlers')
-const {view} = require('../helpers/response')
 
 function draw(callback, handlers) {
 	let router = new Router
@@ -14,8 +14,8 @@ function sendView(template, data) {
 		if (typeof data === 'function') {
 			data = data(ctx)
 		}
-
-		return view(template, data)
+		ctx.view = template
+		ctx.data = data
 	}
 }
 
@@ -27,8 +27,8 @@ function redirect(url) {
 
 function buildRoutes() {
 	return draw(router => {
-		router.use(handleResponse)
-
+		router.use(handleError())
+		router.use(renderView())
 		router.use(layout('layouts/main'))
 
 		router.get('/', handlers.home.index)

@@ -1,8 +1,6 @@
-const {view} = require('../helpers/response')
-const db = require('../services/db')
-
-exports.index = async function(ctx) {
-	return view('home', {
+exports.index = async function (ctx) {
+	ctx.view = 'home'
+	ctx.data = {
 		title: 'Home',
-	})
+	}
 }

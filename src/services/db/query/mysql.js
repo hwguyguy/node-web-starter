@@ -12,7 +12,7 @@ const ENV = env()
 const configs = yaml.load(root('config/database.yml'))
 const config = configs[ENV]
 
-let poolConfig = {
+const poolConfig = {
 	connectionLimit: config.pool || 10,
 	user: config.username,
 	password: config.password,

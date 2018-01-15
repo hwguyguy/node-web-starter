@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title><%=typeof title === 'undefined' ? '' : title%></title>
-	<link rel="stylesheet" href="/public/main.css?v=1.0">
-</head>
+<meta charset="UTF-8">
+<title><%=typeof title === 'undefined' ? '' : title%></title>
+<link rel="stylesheet" href="/public/main.css?v=1">
 <body class="<%=_template.replace(/\//g, '-')%>">
 	<%-include('./main/header')%>
 	<%-body%>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="/public/main.js?v=1.0"></script>
+	<script src="/public/main.js?v=1"></script>
 </body>
-</html>

@@ -2,17 +2,17 @@ const path = require('path')
 const fs = require('mz/fs')
 const readdir = require('recursive-readdir')
 const ejs = require('ejs')
-const {root} = require('../../../helpers/path')
-const {env} = require('../../../helpers/env')
-const {translate, withLocale} = require('../../../../locales')
-const {url} = require('../../../helpers/url')
+const {root} = require('../../helpers/path')
+const {env} = require('../../helpers/env')
+const {translate, withLocale} = require('../../../locales')
+const {url} = require('../../helpers/url')
 
 const ENV = env()
 const viewRoot = root.bind(null, 'views')
-let cache = {}
+const cache = {}
 
 exports.precompileTemplates = async function precompileTemplates() {
-	let filePaths = await readdir(viewRoot())
+	const filePaths = await readdir(viewRoot())
 
 	for (let filePath of filePaths) {
 		let content = await fs.readFile(filePath, 'utf8')
@@ -28,7 +28,7 @@ function renderTemplate(fullPath, data) {
 		fullPath += '.ejs'
 	}
 
-	let template = cache[fullPath]
+	const template = cache[fullPath]
 
 	if (template) {
 		return template(data)
