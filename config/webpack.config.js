@@ -26,7 +26,7 @@ module.exports = {
 	},
 
 	output: {
-		path: root('public'),
+		path: root('dist'),
 		filename: '[name].js',
 		sourceMapFilename: '[file].map',
 		chunkFilename: '[id].chunk.js',
@@ -51,11 +51,14 @@ module.exports = {
 					babelrc: false,
 					presets: [
 						['env', {
-							targets: Object.assign({
-								browsers: ['last 2 versions'],
-							}, (ENV === 'production' && {
-								uglify: true,
-							})),
+							targets: Object.assign(
+								{
+									browsers: ['last 2 versions'],
+								},
+								(ENV === 'production' && {
+									uglify: true,
+								})
+							),
 						}],
 					],
 					plugins: [
