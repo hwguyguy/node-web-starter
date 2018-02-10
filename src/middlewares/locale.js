@@ -10,7 +10,7 @@ function getLocaleFromPath(path, prefix) {
 	return null
 }
 
-module.exports = function({
+exports.parseLocale = function ({
 	fromPath = false,
 	prefix = '',
 	fromHeader = true,

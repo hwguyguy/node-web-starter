@@ -1,11 +1,4 @@
-node_modules/
-.bundle/
+node_modules
+.bundle
 /config/database.yml
-/public/main.js
-/public/main.js.map
-/public/main.css
-/public/main.css.map
-/public/admin.js
-/public/admin.js.map
-/public/admin.css
-/public/admin.css.map
+/dist

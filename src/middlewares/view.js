@@ -8,17 +8,3 @@ exports.renderView = function () {
 		}
 	}
 }
-
-exports.layout = function (layoutPath) {
-	return async function (ctx, next) {
-		await next()
-		if (ctx.view) {
-			if (!ctx.data) {
-				ctx.data = {}
-			}
-			if (!ctx.data._layout) {
-				ctx.data._layout = layoutPath
-			}
-		}
-	}
-}

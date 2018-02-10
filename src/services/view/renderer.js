@@ -1,26 +1,14 @@
 const path = require('path')
-const fs = require('mz/fs')
-const readdir = require('recursive-readdir')
-const ejs = require('ejs')
-const {root} = require('../../helpers/path')
+const {viewRoot} = require('./config')
 const {env} = require('../../helpers/env')
 const {translate, withLocale} = require('../../../locales')
 const {url} = require('../../helpers/url')
 
 const ENV = env()
-const viewRoot = root.bind(null, 'views')
-const cache = {}
+const cachedTemplates = {}
 
-exports.precompileTemplates = async function precompileTemplates() {
-	const filePaths = await readdir(viewRoot())
-
-	for (let filePath of filePaths) {
-		let content = await fs.readFile(filePath, 'utf8')
-		cache[filePath] = ejs.compile(content, {
-			compileDebug: ENV === 'development',
-			rmWhitespace: ENV === 'production',
-		})
-	}
+exports.addTemplate = function addTemplate(filePath, template) {
+	cachedTemplates[filePath] = template
 }
 
 function renderTemplate(fullPath, data) {
@@ -28,19 +16,33 @@ function renderTemplate(fullPath, data) {
 		fullPath += '.ejs'
 	}
 
-	const template = cache[fullPath]
+	const template = cachedTemplates[fullPath]
 
-	if (template) {
-		return template(data)
+	if (!template) {
+		if (ENV === 'development') {
+			throw new Error('Cannot find precompiled template file ' + fullPath)
+		} else {
+			return ''
+		}
 	}
 
-	throw new Error('Cannot find precompiled template file ' + fullPath)
+	if (template.meta && template.meta.layout) {
+		return renderTemplate(viewRoot(template.meta.layout), {
+			...data,
+			_current: template.meta.layout,
+			body: template(data)
+		})
+	}
+
+	return template(data)
 }
 
 function include(file, data) {
 	let filePath
 	if (file.charAt(0) === '.') {
 		filePath = viewRoot(path.dirname(this._current), file)
+		console.log(this._current)
+		console.log(filePath)
 	} else {
 		filePath = viewRoot(file)
 	}
@@ -58,7 +60,7 @@ const defaultData = {
 }
 
 exports.render = function render(file, ctx, data = {}) {
-	data = {
+	return renderTemplate(viewRoot(file), {
 		...defaultData,
 		t: withLocale(ctx.locale, translate),
 		url: withLocale(ctx.locale, url),
@@ -66,15 +68,5 @@ exports.render = function render(file, ctx, data = {}) {
 		_template: file, // entry template
 		_current: file, // current template
 		...data,
-	}
-
-	let html = renderTemplate(viewRoot(file), data)
-
-	if (data._layout) {
-		data.body = html
-		data._current = data._layout
-		html = renderTemplate(viewRoot(data._layout), data)
-	}
-
-	return html
+	})
 }
