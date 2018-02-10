@@ -1,14 +1,20 @@
-const {get, post} = require('./api')
+const {byId, byTag, create: h, replace} = require('../common/dom')
+//const {get, post} = require('./api')
 
-module.exports = {
-	'home': async () => {
-		console.log('Print home from router.')
-		//let html = await get('products')
-		//console.log(html)
-	},
+exports['home'] = async function () {
+	console.log('Print home from router.')
+	//let html = await get('products')
+	//console.log(html)
+	replace(
+		byId('list'),
+		h('ul', {id: 'list', class: 'list'}, [
+			h('li', null, 'One'),
+			h('li', null, 'Two'),
+		])
+	)
+}
 
-	'products-list': () => {
-		let links = $('a')
-		console.log(links)
-	},
+exports['products--list'] = function () {
+	let links = byTag('a')
+	console.log(links)
 }

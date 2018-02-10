@@ -1,5 +1,3 @@
-module.exports = {
-	'admin-dashboard': () => {
-		console.log('Admin dashboard.')
-	},
+exports['admin-dashboard'] = function () {
+	console.log('Admin dashboard.')
 }
