@@ -41,8 +41,6 @@ function include(file, data) {
 	let filePath
 	if (file.charAt(0) === '.') {
 		filePath = viewRoot(path.dirname(this._current), file)
-		console.log(this._current)
-		console.log(filePath)
 	} else {
 		filePath = viewRoot(file)
 	}
