@@ -1,3 +1,5 @@
+exports.file = require('./file')
 exports.home = require('./home')
 exports.products = require('./products')
+exports.upload = require('./upload')
 exports.admin = require('./admin')

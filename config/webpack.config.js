@@ -16,12 +16,12 @@ const adminCss = new ExtractTextPlugin('admin.css')
 module.exports = {
 	entry: {
 		main: [
-			root('assets/js/main/index.js'),
-			root('assets/stylus/main/index.styl'),
+			root('assets/scripts/main/index.js'),
+			root('assets/styles/main/index.styl'),
 		],
 		admin: [
-			root('assets/js/admin/index.js'),
-			root('assets/stylus/admin/index.styl'),
+			root('assets/scripts/admin/index.js'),
+			root('assets/styles/admin/index.styl'),
 		],
 	},
 
@@ -69,7 +69,7 @@ module.exports = {
 			},
 
 			{
-				include: root('assets/stylus/main/index.styl'),
+				include: root('assets/styles/main/index.styl'),
 				use: mainCss.extract({
 					fallback: 'style-loader',
 					use: [{
@@ -98,7 +98,7 @@ module.exports = {
 			},
 
 			{
-				include: root('assets/stylus/admin/index.styl'),
+				include: root('assets/styles/admin/index.styl'),
 				use: adminCss.extract({
 					fallback: 'style-loader',
 					use: [{

@@ -57,12 +57,11 @@ const defaultData = {
 	include,
 }
 
-exports.render = function render(file, ctx, data = {}) {
+exports.render = function render(file, data = {}) {
 	return renderTemplate(viewRoot(file), {
 		...defaultData,
-		t: withLocale(ctx.locale, translate),
-		url: withLocale(ctx.locale, url),
-		ctx,
+		t: withLocale(data.locale, translate),
+		url: withLocale(data.locale, url),
 		_template: file, // entry template
 		_current: file, // current template
 		...data,
