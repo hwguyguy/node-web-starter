@@ -1,5 +1,5 @@
 exports.addLocaleToView = function (context) {
-	if (context.params && context.params.locale) {
+	if (context.view && context.params && context.params.locale) {
 		if (!context.data) {
 			context.data = {}
 		}
