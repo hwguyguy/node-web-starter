@@ -1,6 +1,7 @@
-.git/
-node_modules/
-.bundle/
+.git
+node_modules
+package-lock.json
+.bundle
 *.gz
 *.png
 *.jpg
