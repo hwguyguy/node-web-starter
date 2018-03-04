@@ -1,5 +1,5 @@
 const Promise = require('bluebird')
-const {pool} = require('./mysql')
+const {pool} = require('./connection')
 const {camelize} = require('./parameter')
 const {MysqlError, DbReadOneError, DbWriteError} = require('../../error/db')
 

@@ -1,4 +1,4 @@
-const {pool} = require('./mysql')
+const {pool} = require('./connection')
 const {read, readOne, write} = require('./io')
 const {select, where, orderBy, page} = require('./syntax')
 const {underscore} = require('./parameter')
