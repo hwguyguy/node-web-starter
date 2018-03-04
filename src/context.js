@@ -11,6 +11,9 @@ exports.Context = class Context {
 	}
 
 	respond(data, status = 200) {
+		if (this.sent) {
+			return
+		}
 		send(this.response, status, data)
 		this.sent = true
 	}
