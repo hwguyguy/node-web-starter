@@ -4,6 +4,7 @@ const {env} = require('../../helpers/env')
 const ENV = env()
 
 const META_PREFIX = '//'
+const REGEXP_META_LINE = new RegExp('^' + META_PREFIX + '\\s*(\\w+)\\s*:(.*)$')
 
 function getMeta(content) {
 	let lines = content.split('\n')
@@ -13,13 +14,14 @@ function getMeta(content) {
 			break
 		}
 	}
-	lines = lines.map(line => line.substr(META_PREFIX.length))
 	const meta = {}
-	const re = /(.*?)(:.*)/
 	for (let i = 0, len = lines.length; i < len; ++i) {
-		const matches = re.exec(lines[i])
-		const [key, value] = matches.slice(1, 3)
-		meta[key.trim()] = value.substr(1).trim()
+		const matches = REGEXP_META_LINE.exec(lines[i])
+		if (matches) {
+			const key = matches[1]
+			const value = matches[2]
+			meta[key.trim()] = value.trim()
+		}
 	}
 	return meta
 }
