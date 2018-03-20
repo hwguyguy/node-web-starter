@@ -41,7 +41,7 @@ exports.createTemplate = function createTemplate(content) {
 	const meta = getMeta(content)
 	const template =  ejs.compile(getContentWithoutMetaLines(content), {
 		compileDebug: ENV === 'development',
-		rmWhitespace: ENV === 'production',
+		rmWhitespace: true,
 	})
 	template.meta = meta
 	return template
