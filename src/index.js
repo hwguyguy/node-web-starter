@@ -1,5 +1,5 @@
 const micro = require('micro')
-const {prepareServices} = require('./services')
+const {prepare: prepareServices} = require('./services')
 const {prepare: prepareRouter, run: runRouter} = require('./router')
 const {env} = require('./helpers/env')
 

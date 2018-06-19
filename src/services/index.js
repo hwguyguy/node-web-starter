@@ -1,5 +1,5 @@
 const {prepare: prepareView} = require('./view')
 
-exports.prepareServices = async function () {
+exports.prepare = async function () {
 	await prepareView()
 }
