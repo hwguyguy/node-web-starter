@@ -39,8 +39,8 @@ exports.translate = function translate(keys, locale) {
 	return translation
 }
 
-exports.withLocale = function withLocale(locale, translate) {
-	return function (keys) {
-		return translate(keys, locale)
+exports.withLocale = function withLocale(locale, fn) {
+	return function (arg) {
+		return fn(arg, locale)
 	}
 }

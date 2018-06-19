@@ -31,7 +31,8 @@ exports.prepare = function () {
 
 exports.run = async function (request, response) {
 	const parsedUrl = parseUrl(request.url)
-	console.log(request.method + ' ' + parsedUrl.pathname)
+	console.log('<-- ' + request.method + ' ' + parsedUrl.pathname)
+	const start = Date.now()
 	const found = router.find(request.method, parsedUrl.pathname)
 	if (found) {
 		try {
@@ -41,12 +42,16 @@ exports.run = async function (request, response) {
 				parsedUrl,
 				found.params,
 			))
+			const requestTime = Date.now() - start
+			const requestTimeString = requestTime < 10000 ? requestTime + 'ms' : Math.round(requestTime / 1000) + 's'
+			console.log('--> ' + request.method + ' ' + parsedUrl.pathname + ' ' + response.statusCode + ' ' + requestTimeString)
 		} catch (e) {
 			console.error(e)
 			send(response, 500, 'Internal Server Error')
+			console.log('--> ' + request.method + ' ' + parsedUrl.pathname + ' 500')
 		}
 	} else {
 		send(response, 404, 'Route Not Found')
+		console.log('--> ' + request.method + ' ' + parsedUrl.pathname + ' 404')
 	}
-	console.log(request.method + ' ' + parsedUrl.pathname + ' ' + response.statusCode)
 }

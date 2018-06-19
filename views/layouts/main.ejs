@@ -1,9 +1,10 @@
+// imports.header: ./main/header
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title><%=typeof title === 'undefined' ? '' : title%></title>
 <link rel="stylesheet" href="/dist/main.css?v=1">
-<body class="<%=_template.replace(/\//g, '--')%>">
-	<%-include('./main/header')%>
+<body class="<%=_entry.replace(/\//g, '--')%>">
+	<%-imports.header({locale: typeof locale === 'undefined' ? null : locale})%>
 	<%-body%>
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 	<script src="/dist/main.js?v=1"></script>
