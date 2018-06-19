@@ -1,6 +1,5 @@
 const {wrap} = require('../helpers/handler')
 const {view} = require('../groups')
-const {parseBody} = require('../filters/request')
 
 exports.show = wrap(view)(async function (ctx) {
 	ctx.view = 'upload'
@@ -9,8 +8,8 @@ exports.show = wrap(view)(async function (ctx) {
 	}
 })
 
-exports.handle = wrap({
-	before: [parseBody]
-})(async function (ctx) {
+exports.handle = async function (ctx) {
+	const body = await ctx.getBody()
+	console.log(body)
 	ctx.respond('Uploaded', 200)
-})
+}

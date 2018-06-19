@@ -1,10 +1,11 @@
 // imports.header: ./main/header
+<%var title, locale%>
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<title><%=typeof title === 'undefined' ? '' : title%></title>
+<title><%=title || 'Web Starter'%></title>
 <link rel="stylesheet" href="/dist/main.css?v=1">
 <body class="<%=_entry.replace(/\//g, '--')%>">
-	<%-imports.header({locale: typeof locale === 'undefined' ? null : locale})%>
+	<%-imports.header({locale})%>
 	<%-body%>
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 	<script src="/dist/main.js?v=1"></script>

@@ -46,9 +46,11 @@ exports.run = async function (request, response) {
 			const requestTimeString = requestTime < 10000 ? requestTime + 'ms' : Math.round(requestTime / 1000) + 's'
 			console.log('--> ' + request.method + ' ' + parsedUrl.pathname + ' ' + response.statusCode + ' ' + requestTimeString)
 		} catch (e) {
+			const statusCode = e.statusCode || 500
+			const messageBody = e.messageBody || 'Internal Server Error'
+			send(response, statusCode, messageBody)
+			console.log('--> ' + request.method + ' ' + parsedUrl.pathname + ' ' + statusCode)
 			console.error(e)
-			send(response, 500, 'Internal Server Error')
-			console.log('--> ' + request.method + ' ' + parsedUrl.pathname + ' 500')
 		}
 	} else {
 		send(response, 404, 'Route Not Found')
