@@ -1,5 +1,5 @@
 const {wrap} = require('../helpers/handler')
-const {view} = require('../groups')
+const {view} = require('../filter-groups')
 
 exports.index = wrap(view)(async function (ctx) {
 	ctx.view = 'home'
