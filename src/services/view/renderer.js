@@ -36,8 +36,12 @@ exports.addTemplate = function addTemplate(filePath, template) {
 				throw new Error('Extended template "' + extendedPath + '" from "' + importPath + '" not found')
 			}
 
-			if (!template.imports && template.meta && template.meta.imports) {
-				template.imports = getRuntimeImports(template.meta.imports, importPath)
+			if (template.imports === undefined) {
+				if (template.meta && template.meta.imports) {
+					template.imports = getRuntimeImports(template.meta.imports, importPath)
+				} else {
+					template.imports = null
+				}
 			}
 			const bodyHtml = template({
 				...props,
@@ -53,9 +57,14 @@ exports.addTemplate = function addTemplate(filePath, template) {
 		}
 	} else {
 		IMPORTS[importPath] = function (props) {
-			if (!template.imports && template.meta && template.meta.imports) {
-				template.imports = getRuntimeImports(template.meta.imports, importPath)
+			if (template.imports === undefined) {
+				if (template.meta && template.meta.imports) {
+					template.imports = getRuntimeImports(template.meta.imports, importPath)
+				} else {
+					template.imports = null
+				}
 			}
+
 			return template({
 				...props,
 				imports: template.imports,
