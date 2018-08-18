@@ -1,16 +1,16 @@
-const fs = require('mz/fs')
-const readdir = require('recursive-readdir')
-const {viewsRoot} = require('./config')
-const {createTemplate} = require('./precompiler')
-const {render, addTemplate} = require('./renderer')
+const {TemplateEngine} = require('./template-engine')
+const {root} = require('../../helpers/path')
+const {env} = require('../../helpers/env')
 
-exports.render = render
+const ENV = env()
+
+const templateEngine = new TemplateEngine(root(), 'views', {
+	compileDebug: ENV === 'development',
+	rmWhitespace: true,
+})
 
 exports.prepare = async function prepare() {
-	const filePaths = await readdir(viewsRoot())
-	for (const filePath of filePaths) {
-		const content = await fs.readFile(filePath, 'utf8')
-		const template = createTemplate(content)
-		addTemplate(filePath, template)
-	}
+	await templateEngine.compile()
 }
+
+exports.render = templateEngine.render.bind(templateEngine)

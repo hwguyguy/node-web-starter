@@ -1,7 +1,5 @@
 const ejs = require('ejs')
-const {env} = require('../../helpers/env')
 
-const ENV = env()
 const META_PREFIX = '//'
 const REGEXP_META_LINE = new RegExp('^' + META_PREFIX + '\\s*(@?\\w[\\w\\.@]*)\\s*:(.*)$')
 
@@ -67,13 +65,10 @@ function getContent(lines) {
 	return contentLines.join('\n')
 }
 
-exports.createTemplate = function createTemplate(content) {
+exports.createTemplate = function createTemplate(content, options) {
 	const lines = content.split('\n')
 	const meta = getMeta(lines)
-	const template =  ejs.compile(getContent(lines), {
-		compileDebug: ENV === 'development',
-		rmWhitespace: true,
-	})
+	const template =  ejs.compile(getContent(lines), options)
 	template.meta = meta
 	return template
 }
