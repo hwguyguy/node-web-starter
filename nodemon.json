@@ -7,5 +7,5 @@
 	"ignore": [
 		"webpack.config.js"
 	],
-	"ext": "js ejs yml"
+	"ext": "js mjs ejs yml"
 }

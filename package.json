@@ -6,17 +6,19 @@
   "author": "Jack Wan <hwguyguy@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached",
-    "build:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
-    "watch": "webpack --config config/webpack.config.js --progress --profile --colors --watch --display-error-details --display-cached"
+    "start": "node --experimental-modules .",
+    "server:watch": "nodemon --exec \"npm start\" .",
+    "assets:build": "webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached",
+    "assets:build:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
+    "assets:watch": "webpack --config config/webpack.config.js --progress --profile --colors --watch --display-error-details --display-cached"
   },
   "dependencies": {
-    "bluebird": "^3.5.0",
     "caporal": "^0.10.0",
     "content-type": "^1.0.4",
     "cookie": "^0.3.1",
     "ejs": "^2.5.7",
     "find-my-way": "^1.10.1",
+    "knex": "^0.15.2",
     "micro": "^9.1.0",
     "mime-types": "^2.1.17",
     "multiparty": "^4.1.3",

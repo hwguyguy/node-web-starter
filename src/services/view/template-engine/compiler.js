@@ -3,15 +3,20 @@ const ejs = require('ejs')
 const META_PREFIX = '//'
 const REGEXP_META_LINE = new RegExp('^' + META_PREFIX + '\\s*(@?\\w[\\w\\.@]*)\\s*:(.*)$')
 
-function getMeta(lines) {
-	let metaLines
+function splitContentAndMeta(fileContent) {
+	const lines = fileContent.split('\n')
+	let metaLines = []
+	let contentLines = []
+	const meta = {}
+
 	for (let i = 0, len = lines.length; i < len; ++i) {
 		if (!lines[i].startsWith(META_PREFIX)) {
 			metaLines = lines.slice(0, i)
+			contentLines = lines.slice(i)
 			break
 		}
 	}
-	const meta = {}
+
 	for (let i = 0, iLen = metaLines.length; i < iLen; ++i) {
 		const matches = REGEXP_META_LINE.exec(metaLines[i])
 		if (matches) {
@@ -51,24 +56,13 @@ function getMeta(lines) {
 			}
 		}
 	}
-	return meta
+
+	return [contentLines.join('\n'), meta]
 }
 
-function getContent(lines) {
-	let contentLines = []
-	for (let i = 0, len = lines.length; i < len; ++i) {
-		if (!lines[i].startsWith(META_PREFIX)) {
-			contentLines = lines.slice(i)
-			break
-		}
-	}
-	return contentLines.join('\n')
-}
-
-exports.createTemplate = function createTemplate(content, options) {
-	const lines = content.split('\n')
-	const meta = getMeta(lines)
-	const template =  ejs.compile(getContent(lines), options)
+exports.createTemplate = function createTemplate(fileContent, options) {
+	const [content, meta] = splitContentAndMeta(fileContent)
+	const template =  ejs.compile(content, options)
 	template.meta = meta
 	return template
 }

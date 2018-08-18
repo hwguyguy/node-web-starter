@@ -17,7 +17,7 @@ exports.isLocaleAvailable = function isLocaleAvailable(locale) {
 	return !!translations[locale]
 }
 
-exports.translate = function translate(keys, locale) {
+exports.translate = function translate(locale, keys) {
 	let translation = translations[locale]
 
 	if (!translation) {
@@ -40,7 +40,7 @@ exports.translate = function translate(keys, locale) {
 }
 
 exports.withLocale = function withLocale(locale, fn) {
-	return function (arg) {
-		return fn(arg, locale)
+	return function (...args) {
+		return fn(locale, ...args)
 	}
 }
