@@ -4,7 +4,7 @@ import {env} from '../../helpers/env'
 
 const ENV = env()
 
-const templateEngine = new TemplateEngine(root(), 'views', {
+const templateEngine = new TemplateEngine(root('src'), 'views', {
 	compileDebug: ENV === 'development',
 	rmWhitespace: true,
 })
