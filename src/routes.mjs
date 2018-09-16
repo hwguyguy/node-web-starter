@@ -16,9 +16,11 @@ export function prepare(router) {
 
 		s.get('/', handlers.home.index)
 		s.get('/:locale', handlers.home.index)
-		s.get('/products', handlers.products.index)
-		s.get('/products/:id', handlers.products.show)
-		s.get('/products/:id/:slug', handlers.products.show)
+		s.scope('/products', s => {
+			s.get('', handlers.products.index)
+			s.get('/:id', handlers.products.show)
+			s.get('/:id/:slug', handlers.products.show)
+		})
 		s.get('/upload', handlers.upload.show)
 		s.post('/upload', handlers.upload.handle)
 		s.get('/admin', redirect('/admin/dashboard'))

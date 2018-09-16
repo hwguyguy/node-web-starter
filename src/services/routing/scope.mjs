@@ -7,6 +7,7 @@ export class Scope {
 
 	scope(prefix, fn) {
 		if (typeof fn === 'function') {
+			this.prefix += prefix
 			const scope = new Scope(this.router, {
 				prefix: this.prefix,
 				middlewares: this.middlewares,
