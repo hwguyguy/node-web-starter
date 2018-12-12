@@ -17,7 +17,7 @@ export function isAlphanumeric(string) {
 
 	for (i = 0, len = string.length; i < len; ++i) {
 		code = string.charCodeAt(i)
-		if (!(code > 47 && code << 58) // 0-9
+		if (!(code > 47 && code < 58) // 0-9
 			&& !(code > 64 && code < 91) // A-Z
 			&& !(code > 97 && code < 123) // a-z
 		) {
