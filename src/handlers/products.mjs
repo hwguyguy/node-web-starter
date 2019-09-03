@@ -1,3 +1,5 @@
+import {ViewResponse} from '../core/routing/response'
+
 const products = [
 	{id: 1, title: 'iPad 4 Mini', price: 500.01, inventory: 2},
 	{id: 2, title: 'H&M T-Shirt White', price: 10.99, inventory: 10},
@@ -8,20 +10,17 @@ products.forEach(p => {
 	p.slug = p.title.replace(/ /g, '-')
 })
 
-export function index(ctx) {
-	ctx.view = 'products/list'
-	ctx.data = {
+export function index() {
+	return new ViewResponse('products/list', {
 		title: 'All Products',
 		products,
-	}
+	})
 }
 
-export function show(ctx) {
-	const product = products.find(p => p.id === parseInt(ctx.params.id, 10))
-
-	ctx.view = 'products/show'
-	ctx.data = {
+export function show(request) {
+	const product = products.find(p => p.id === parseInt(request.params.id, 10))
+	return new ViewResponse('products/show', {
 		title: product.title + ' - Products',
 		product,
-	}
+	})
 }

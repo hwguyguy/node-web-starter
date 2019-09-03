@@ -1,12 +1,13 @@
-export function show(ctx) {
-	ctx.view = 'upload'
-	ctx.data = {
-		title: 'Upload',
-	}
+import {Response, ViewResponse} from '../core/routing/response'
+
+export function show() {
+	return new ViewResponse('upload', {
+		title: 'Upload'
+	})
 }
 
-export async function handle(ctx) {
-	const body = await ctx.getBody()
+export async function handle(request) {
+	const body = await request.getBody()
 	console.log(body)
-	ctx.respond('Uploaded', 200)
+	return new Response('Uploaded')
 }

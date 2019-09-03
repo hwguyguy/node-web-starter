@@ -1,10 +1,9 @@
 import urlLib from 'url'
-import micro from 'micro'
 import Engine from 'find-my-way'
-import {Scope} from './scope'
-import {Context} from '../context'
+import Scope from './scope'
+import Request from './request'
 
-export class Router {
+export default class Router {
 	constructor() {
 		this.engine = new Engine
 	}
@@ -18,26 +17,19 @@ export class Router {
 		this.engine.on(method, path, compose(handler))
 	}
 
-	async run(request, response) {
+	match(request) {
 		const parsedUrl = urlLib.parse(request.url)
 		const found = this.engine.find(request.method, parsedUrl.pathname)
+
 		if (found) {
-			try {
-				await found.handler(new Context(
-					request,
-					response,
-					parsedUrl,
-					found.params,
-				))()
-			} catch (e) {
-				const statusCode = e.statusCode || 500
-				const messageBody = e.messageBody || 'Internal Server Error'
-				micro.send(response, statusCode, messageBody)
-				console.error(e)
-			}
-		} else {
-			micro.send(response, 404, 'Route Not Found')
+			return found.handler(new Request(
+				request,
+				parsedUrl,
+				found.params,
+			))
 		}
+
+		return null
 	}
 }
 
@@ -46,7 +38,7 @@ function compose(handlers) {
 		return handlers
 	}
 
-	return function (context) {
+	return function (request, state = {}) {
 		let index = -1
 
 		function getNext() {
@@ -55,8 +47,8 @@ function compose(handlers) {
 				return function () {}
 			}
 
-			return async function () {
-				await handlers[i](context, getNext())
+			return function () {
+				return handlers[i](request, getNext(), state)
 			}
 		}
 

@@ -1,6 +1,7 @@
-export function index(ctx) {
-	ctx.view = 'home'
-	ctx.data = {
+import {ViewResponse} from '../core/routing/response'
+
+export function index() {
+	return new ViewResponse('home', {
 		title: 'Home',
-	}
+	})
 }

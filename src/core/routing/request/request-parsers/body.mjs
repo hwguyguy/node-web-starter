@@ -2,7 +2,7 @@ import micro from 'micro'
 import contentTypeParser from 'content-type'
 import qs from 'qs'
 import multiparty from 'multiparty'
-import {root} from '../../../helpers/path'
+import {root} from '../../../../helpers/path'
 
 const SIZE_10MB = 10 * 1024 * 1024
 const SIZE_1MB = 1 * 1024 * 1024
@@ -46,7 +46,7 @@ export async function parseBody(request) {
 	let body = {}
 
 	if (contentTypeHeader) {
-		const contentType = contentTypeParser.parseContentType(contentTypeHeader)
+		const contentType = contentTypeParser.parse(contentTypeHeader)
 
 		switch (contentType.type) {
 		case 'application/json': {

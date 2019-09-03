@@ -7,8 +7,7 @@ const ENV = process.env.NODE_ENV || 'development'
 const ROOT_PATH = path.resolve(__dirname, '..')
 
 function root(...args) {
-	args.unshift(ROOT_PATH)
-	return path.join.apply(path, args)
+	return path.join(ROOT_PATH, ...args)
 }
 
 module.exports = {

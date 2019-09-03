@@ -1,18 +1,13 @@
 import handlers from './handlers'
-import {log} from './middlewares/logger'
-import {handleError} from './middlewares/error'
 import {extractFromPath as extractLocaleFromPath} from './middlewares/locale'
-import {renderView} from './middlewares/view'
 
 export function prepare(router) {
 	router.build(s => {
-		s.use(log, handleError)
-
 		s.get('/favicon.ico', handlers.file.serve)
 		s.get('/public/*', handlers.file.serve)
 		s.get('/dist/*', handlers.file.serve)
 
-		s.use(renderView, extractLocaleFromPath)
+		s.use(extractLocaleFromPath)
 
 		s.get('/', handlers.home.index)
 		s.get('/:locale', handlers.home.index)

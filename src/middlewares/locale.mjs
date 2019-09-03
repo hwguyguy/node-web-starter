@@ -1,22 +1,14 @@
 import localesModule from '../../locales'
+import {ViewResponse} from '../core/routing/response'
 
-function modifyViewData(context) {
-	if (!context.data) {
-		context.data = {}
+export async function extractFromPath(request, next) {
+	const response = await next()
+
+	if (response instanceof ViewResponse) {
+		const locale = request.params.locale
+		response.data.locale = locale
+		response.data.translate = localesModule.withLocale(locale, localesModule.translate)
 	}
-	context.data.locale = context.locale
-	context.data.t = context.translate
-}
 
-export async function extractFromPath(context, next) {
-	let locale = context.params.locale
-
-	context.locale = locale
-	context.translate = localesModule.withLocale(locale, localesModule.translate)
-
-	await next()
-
-	if (context.view) {
-		modifyViewData(context)
-	}
+	return response
 }

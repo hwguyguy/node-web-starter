@@ -1,4 +1,4 @@
-export class Scope {
+export default class Scope {
 	constructor(router, options = {}) {
 		this.router = router
 		this.prefix = options.prefix || ''
