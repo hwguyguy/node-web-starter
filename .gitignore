@@ -1,6 +1,7 @@
 node_modules
 .bundle
 /config/database.yml
+/build
 /dist
 /upload/*
 !.keep
