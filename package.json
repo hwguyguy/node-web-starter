@@ -6,20 +6,19 @@
   "author": "Jack Wan <hwguyguy@gmail.com>",
   "main": "index.js",
   "scripts": {
-    "start": "node .",
+    "start": "npm run server:start",
     "server:start": "node .",
     "server:start:watch": "nodemon --exec \"npm run server:start\" .",
     "server:build": "babel src -d build",
-    "server:build:watch": "babel src -d build -w",
+    "server:build:watch": "rm -r build/* ; babel src -d build -w",
     "assets:build": "webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached",
-    "assets:build:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail",
-    "assets:watch": "webpack --config config/webpack.config.js --progress --profile --colors --watch --display-error-details --display-cached"
+    "assets:build:watch": "webpack --config config/webpack.config.js --progress --profile --colors --watch --display-error-details --display-cached",
+    "assets:build:prod": "NODE_ENV=production webpack --config config/webpack.config.js --progress --profile --colors --display-error-details --display-cached --bail"
   },
   "dependencies": {
     "caporal": "^0.10.0",
     "content-type": "^1.0.4",
     "cookie": "^0.3.1",
-    "ejs": "^2.5.7",
     "find-my-way": "^1.10.1",
     "knex": "^0.15.2",
     "micro": "^9.1.0",

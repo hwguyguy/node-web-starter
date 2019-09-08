@@ -1,6 +1,7 @@
 export const ENV_NAME_NODE_ENV = 'NODE_ENV'
 export const ENV_NAME_NODE_PORT = 'NODE_PORT'
 export const ENV_NAME_ROOT_PATH = 'ROOT_PATH' // Path of project root
+export const ENV_NAME_RUNTIME_DIR = 'RUNTIME_DIR' // Runtime directory relative to project root
 
 const envVars = {
 	[ENV_NAME_NODE_ENV]: process.env.NODE_ENV || 'development',

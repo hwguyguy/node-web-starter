@@ -5,12 +5,13 @@ import errorMiddleware from '@/core/http/middlewares/error'
 import logMiddleware from '@/core/http/middlewares/log'
 import routerMiddleware from '@/core/http/middlewares/router'
 import {prepare as prepareServices} from '@/services'
-import {prepare as prepareRoutes} from '@/routes'
+import {routes} from '@/routes'
 import {
 	env,
 	setEnv,
 	ENV_NAME_NODE_PORT,
 	ENV_NAME_ROOT_PATH,
+	ENV_NAME_RUNTIME_DIR,
 } from '@/helpers/env'
 
 export async function main(options) {
@@ -21,7 +22,7 @@ export async function main(options) {
 		await prepareServices()
 
 		const router = new Router
-		prepareRoutes(router)
+		router.build(routes)
 
 		const handler = new Handler({
 			middlewares: [
@@ -53,5 +54,10 @@ function setupOptions(options) {
 		throw new Error('Root path is not defined.')
 	}
 
+	if (!options.runtimeDirectory) {
+		throw new Error('Runtime directory is not defined.')
+	}
+
 	setEnv(ENV_NAME_ROOT_PATH, options.root)
+	setEnv(ENV_NAME_RUNTIME_DIR, options.runtimeDirectory)
 }

@@ -1,6 +1,6 @@
 import ReactDomServer from 'react-dom/server'
 import {Response} from '@/core/routing/response'
-import {root} from '@/helpers/path'
+import {runtime} from '@/helpers/path'
 
 const doctype = '<!DOCTYPE html>'
 
@@ -23,7 +23,7 @@ export default class ViewResponse extends Response {
 }
 
 function render(template, data) {
-	const component = require(root('build/views', template)).default
+	const component = require(runtime('views', template)).default
 	const element = component(data)
 	return doctype + ReactDomServer.renderToStaticMarkup(element)
 }
