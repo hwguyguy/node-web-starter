@@ -47,17 +47,17 @@ function checkOptions(options) {
 	if (!options) {
 		throw new Error('Options should not be empty.')
 	}
-}
 
-function setupOptions(options) {
 	if (!options.root) {
-		throw new Error('Root path is not defined.')
+		throw new Error('options.root is required. Project root is not defined.')
 	}
 
 	if (!options.runtimeDirectory) {
-		throw new Error('Runtime directory is not defined.')
+		throw new Error('options.runtimeDirectory is required. Runtime directory is not defined.')
 	}
+}
 
+function setupOptions(options) {
 	setEnv(ENV_NAME_ROOT_PATH, options.root)
 	setEnv(ENV_NAME_RUNTIME_DIR, options.runtimeDirectory)
 }
