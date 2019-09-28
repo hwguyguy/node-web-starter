@@ -13,7 +13,7 @@ export default class FileResponse extends Response {
 			const contentType = mime.lookup(this.filePath) || 'application/octet-stream'
 			const readStream = fs.createReadStream(this.filePath)
 			httpResponse.setHeader('Content-Type', contentType)
-			this.data = readStream
+			this.body = readStream
 			super.send(httpResponse)
 		} else {
 			this.status = 404
